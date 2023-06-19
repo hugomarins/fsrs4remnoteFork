@@ -121,7 +121,7 @@ Other minor changes:
 
         Remember that the natural exponential function $y=e^x$ behaves in the following manner:
         
-        ![](https://raw.githubusercontent.com/hugomarins/DSRscheduler/main/public/Exp.svg) 
+        ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/Exp.svg) 
 
     - $w7$ (always negative) is the factor for the "recall Stability decay", modulating the marginal effect on the memory consolidation decay:
 
@@ -133,7 +133,7 @@ Other minor changes:
         
         Here you can see the effect of $w7$: (https://www.geogebra.org/calculator/kyqjdspc)
 
-        ![](https://raw.githubusercontent.com/hugomarins/DSRscheduler/main/public/w7.png)
+        ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/w7.png)
 
         This sets a great advantage of FSRS & DSR Scheduler over standard Anki-SM2, to which this multiplication factor is almost constant, making intervals extremely large for very mature cards, increasing the chances of forgetting, as they do not consider the decay in memory consolidation!
     
@@ -157,7 +157,7 @@ Other minor changes:
 
         Looking at the formula, we can see that the larger the Retrievability, the power of "e" approaches zero, and as can be seen in the graph of the exponential function $y=e^x$ above, $e^0 = 1$, and the $w8$ term as a whole would be zero (that is, there would be no Stability increase if I review the card again in the same day I have already reviewed). But as the Retrievability decreases, the power of "e" approaches 1 and the term increases:
 
-        ![](https://raw.githubusercontent.com/hugomarins/DSRscheduler/main/public/w8_term.png)
+        ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/w8_term.png)
 
         $w8$ therefore modulates this effect of Retrievability on next Stability (by which rate reviewing after or before the due date will increase / decrease next Stability, respectively). 
 
@@ -168,7 +168,7 @@ Other minor changes:
         - In standard setting of FSRS, the overdue bonus for this same situation would be much larger (greater than 8). And if I had reviewed that same card (10 days of Stability) only after one year, the overdue bonus would be grater than 14!
         - As I don't believe we can suppose that memory is that stable without a consistent review history, I made these changes in DSR Scheduler, to give a bonus for overdueness, but limit it to reasonable figures.
 
-        ![](https://raw.githubusercontent.com/hugomarins/DSRscheduler/main/public/overdue_bonus.png)
+        ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/overdue_bonus.png)
 
 - The *new Stability after FORGET* is similarly a function of Difficulty, current Stability and of the Retrievability, and is modulated by the last four weights:
 
@@ -197,7 +197,7 @@ Other minor changes:
 
 Caveat: Unlike FSRS suggested parameters, that were preceded of extensive study, primarily with language learners databases, and that focus on achieving the desired retrievability, the default parameters suggested above are focused in giving a desired behavior of intervals that meet my needs in studying specific educational material, tested only in myself, and that I suppose can be extrapolated to normal educational material (but not for learning vocabulary of foreign languages). The focus is to give higher intervals (than in Anki behavior) when the card is yet young, but after the card being very mature, avoid too large intervals, allowing for the stabilization decay explained in the Concepts section above.
 
-The intervals if always rating "Good" for the first 10 repetitions (including learning steps) is shown below. Those from the first 10 repetitions of default settings for Anki and for FSRS are also shown for comparison:
+The intervals if always rating "Good" for the first 10 repetitions (including learning steps) is shown below. Those of default settings for Anki and for FSRS are also shown for comparison:
 
 DSR Scheduler's intervals: `1d, 6d, 25d, 2.3m, 5.1m, 9.4m, 1.3y, 2y, 2.9y, 4y` (10 repetitions covering 11.5 years)
 
@@ -208,7 +208,7 @@ FSRS's intervals: `10min, 3d, 8d, 21d, 1.7m, 3.8m, 8.2m, 1.4y, 2.7y, 5.1y` (10 r
 
 Considering the case of always rating "Good" (Difficulty = 5), these default parameters would be compared with Anki ease factor (multiplication factor by which the current interval will be increase) as show below:
 
-![](https://raw.githubusercontent.com/hugomarins/DSRscheduler/main/public/anki_factor_comparison.png)
+![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/anki_factor_comparison.png)
 
 Where the graph shows the factor on a basis of current Stability.
 
@@ -220,6 +220,6 @@ You can play with other settings here https://www.geogebra.org/calculator/qdgnh2
 
 ## Usage
 
-- Install the plugin from the RemNote plugin marketplace by using the link https://www.remnote.com/plugins/dsrscheduler.
+- Install the plugin from the RemNote plugin marketplace by using the link https://www.remnote.com/plugins/fsrs4remnoteFork.
 - Open the settings page and click on [Custom Schedulers].
-- Choose to use "DSR Scheduler" on the "Scheduler Type" dropdown menu (as your Global Default Scheduler or any other scheduler).
+- Choose to use "DSRscheduler" on the "Scheduler Type" dropdown menu (as your Global Default Scheduler or any other scheduler).
