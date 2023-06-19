@@ -1,4 +1,4 @@
-# A FSRS4RemNote fork
+# DSR Scheduler: A FSRS4RemNote fork
 
 DSR Scheduler is a fork of FSRS4RemNote (https://github.com/open-spaced-repetition/fsrs4remnote).
 

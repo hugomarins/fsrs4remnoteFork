@@ -30,7 +30,7 @@ interface CustomData {
 
 async function onActivate(plugin: ReactRNPlugin) {
   await plugin.scheduler.registerCustomScheduler(
-    "FSRS4RemNote",
+    "DSRscheduler",
     Object.values(defaultParameters)
   )
 
