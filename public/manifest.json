@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
-  "id": "fsrs4remnote",
-  "name": "FSRS4RemNote",
+  "id": "fsrs4remnoteFork",
+  "name": "FSRS4RemNoteFork",
   "author": "Jarrett Ye; fork by Hugo Marins",
   "repoUrl": "https://github.com/hugomarins/fsrs4remnoteFork",
   "version": {
@@ -17,7 +17,7 @@
     {
       "type": "All",
       "level": "Read"
-    },
-    "unlisted": true
-  ]
+    }
+  ],
+  "unlisted": true
 }
