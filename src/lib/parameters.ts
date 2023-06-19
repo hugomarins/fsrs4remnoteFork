@@ -4,8 +4,8 @@ export const defaultParameters = {
   [SchedulerParam.Weights]: {
     id: SchedulerParam.Weights,
     title: SchedulerParam.Weights,
-    defaultValue: "1, 1, 5, -0.5, -0.5, 0.2, 1.4, -0.12, 0.8, 2, -0.2, 0.2, 1",
-    description: "Weights created by running the FSRS optimizer. By default these are weights computed from a sample dataset. Coming soon: You will be able to create weights tuned to your own knowledge base by running your repetition history through the FSRS optimizer.",
+    defaultValue: "1, 2.5, 5, -1, -1, 0.2, 0.25, -0.41, 9.3, 2, -0.2, 0.45, 1",
+    description: "Set the weights that would allow the desired behavior, as you can anticipate in Geogebra (https://www.geogebra.org/calculator/qdgnh2ab). Weights meanings explained in READ ME.",
     type: 'string' as const,
     validators: [
       {

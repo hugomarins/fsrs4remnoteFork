@@ -92,9 +92,9 @@ async function onActivate(plugin: ReactRNPlugin) {
       newCustomData = init_states(convertedScore);
       scheduleDays =
       convertedScore == Rating.Again ? 1 / 1440
-      : convertedScore == Rating.Hard ? 5 / 1440
-      : convertedScore == Rating.Good ? 10 / 1440
-      : convertedScore == Rating.Easy ? next_interval(newCustomData.stability * easyBonus)
+      : convertedScore == Rating.Hard ? 10 / 1440
+      : convertedScore == Rating.Good ? 1
+      : convertedScore == Rating.Easy ? 10
       : null!;
     } else if (customData.stage == Stage.Review) {
       const elapsedDays = (new Date(lastRep.date).getTime() - new Date(customData.lastReview).getTime()) / (1000 * 60 * 60 * 24)
@@ -158,12 +158,12 @@ async function onActivate(plugin: ReactRNPlugin) {
       return +(s * (1 + Math.exp(w[6]) *
             (11 - d) *
             Math.pow(s, w[7]) *
-            (Math.exp((1 - r) * w[8]) - 1))).toFixed(2);
+            (Math.exp((1 - Math.pow(r, w[8])) ) - 1))).toFixed(2);
     }
 
     function next_forget_stability(d: number, s: number, r: number) {
       return +(w[9] * Math.pow(d, w[10]) * Math.pow(
-            s, w[11]) * Math.exp((1 - r) * w[12])).toFixed(2);
+            s, w[11]) * Math.exp(1 - Math.pow(r, w[12])) ).toFixed(2);
     }
 
     function init_states(rating: Rating): CustomData {
@@ -181,7 +181,9 @@ async function onActivate(plugin: ReactRNPlugin) {
       let next_s
       if (rating == Rating.Again) {
           next_s = next_forget_stability(next_d, last_states.stability, retrievability)
-      } else {
+      } else if (rating == Rating.Hard) {
+        next_s =  last_states.stability * hardInterval
+    } else {
           next_s = next_recall_stability(next_d, last_states.stability, retrievability)
       }
       return {
