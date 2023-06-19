@@ -2,12 +2,12 @@
   "manifestVersion": 1,
   "id": "fsrs4remnote",
   "name": "FSRS4RemNote",
-  "author": "Jarrett Ye",
-  "repoUrl": "https://github.com/open-spaced-repetition/fsrs4remnote",
+  "author": "Jarrett Ye; fork by Hugo Marins",
+  "repoUrl": "https://github.com/hugomarins/fsrs4remnoteFork",
   "version": {
     "major": 0,
-    "minor": 1,
-    "patch": 2
+    "minor": 0,
+    "patch": 1
   },
   "theme": [],
   "enableOnMobile": true,
@@ -17,6 +17,7 @@
     {
       "type": "All",
       "level": "Read"
-    }
+    },
+    "unlisted": true
   ]
 }
