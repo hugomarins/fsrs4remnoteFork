@@ -16,6 +16,8 @@ $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot S^{w_7}\cdot(e^{(1-R^{w_8}
 
 $$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{(1-R^{w_{12}})}$$
 
+This change is relevant specially for those who have a large backlog and decks that have been dormant for a very large period. I hope this will help you catch up on your backlog. More about this will be said when explaining $w8$ [setting](##New-Stability-after-RECALL).
+
 Also, the distinction between new stability and new interval was removed. New Stability after rating "Hard" has been corrected to be the `last stability * hard interval`; and new Stability after rating "Easy" has been corrected to be the `Next_recall_stability * EasyBonus`. This is to avoid the FSRS strange behavior of, after rating "Hard", on next review the proposed next interval in case of pressing "Hard" once more being too long, almost the same of that of pressing "Good". The inverse situation happened when "Easy" was pressed (pressing Easy subsequently would give a next Stability smaller than it should).[Being tested yet]
 
 Another change is that for *new cards*, learning steps can now be set in `Settings > Custom Schedulers`. Default parameters are:
@@ -49,6 +51,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
 # Setting the Weights
 
+## Initial Stability
 - $w0$ is the initial Stability when the first rating is "Again". (Default: `1`)
 
 - $w1$ (default: `2.5`) will set the initial Stability when the first rating is other than "Again", by the formula:
@@ -59,6 +62,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
     $S_0$ is the initial Stability, and
     $G$ is the "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy).
 
+## Initial Difficulty
 - $w2$ is the initial Difficulty when the first rating is "Good". (Default: `5`)
 
 - $w3$ (always negative; default: `-1`) modulates how much the Difficulty will be changed if first rating is not "Good", by the formula:
@@ -74,9 +78,10 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
     - and how much Difficulty will increase if rating is "Hard".
     - Difficulty will increase twice as much if rating is "Again".
 
-- The *new Difficulty after review* is modulated by two weights: 
+## New Difficulty after review
+The *new Difficulty after review* is modulated by two weights: 
     
-    - $w4$ (always negative; default: `-1`) is similar to $w3$, but modulates how much the Difficulty will be changed after a review (instead of after the first rating), by the formula:
+- $w4$ (always negative; default: `-1`) is similar to $w3$, but modulates how much the Difficulty will be changed after a review (instead of after the first rating), by the formula:
 
         $$D^\prime = D + w_4 \cdot (G - 3)$$
 
@@ -90,7 +95,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
         - and how much Difficulty will increase if rating is "Hard".
         - Difficulty will increase twice as much if rating is "Again".
     
-    - But the new Difficult will be set only after applying the mean reversion to avoid "ease hell", modulated by $w5:$
+- But the new Difficult will be set only after applying the mean reversion to avoid "ease hell", modulated by $w5:$
 
         $$w_5 \cdot D_0(3) + (1 - w_5) \cdot D^\prime$$
 
@@ -101,7 +106,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
         The $w5$ default value of `0.2` means that only 80% of $D^\prime$ will vary with the ratings, and that the remaining 20% will not, tending to approach again the standard Difficulty (set in $w2$) asymptotically.
     
-    - So, the formula for the new Difficulty after review (as a function of current Difficulty before review and the Grade rated in the review) is:
+- So, the formula for the new Difficulty after review (as a function of current Difficulty before review and the Grade rated in the review) is:
 
         $$D^\prime(D,G) = w_5 \cdot D_0(3) +(1 - w_5) \cdot (D + w_4 \cdot (G - 3))$$
 
@@ -113,8 +118,9 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
         $G$ is the "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy), and
         $w_5$ is the factor that modulates how much the Difficulty will be changed after a review.
 
-- The *new Stability after recall* is a function of Difficulty, current Stability and of the Retrievability, and is modulated by three weights:
-    - $w6$ is the "recall factor" (default: `0.25`), and increases exponentially the next Stability (that is, the next interval):
+## New Stability after RECALL
+The *new Stability after recall* is a function of Difficulty, current Stability and of the Retrievability, and is modulated by three weights:
+- $w6$ is the "recall factor" (default: `0.25`), and increases exponentially the next Stability (that is, the next interval):
 
         $$S^\prime_r(D,S,R) = S\cdot(\boxed{e^{w_6}}\cdot (11-D)\cdot S^{w_7}\cdot(e^{(1-R^{w_8})}-1)+1)$$
 
@@ -122,7 +128,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
         
         ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/Exp.svg) 
 
-    - $w7$ (always negative; default: `-0.41`) is the factor for the "recall Stability decay", modulating the marginal effect on the memory consolidation decay:
+- $w7$ (always negative; default: `-0.41`) is the factor for the "recall Stability decay", modulating the marginal effect on the memory consolidation decay:
 
         $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot \boxed{S^{w_7}}\cdot(e^{(1-R^w_8)}-1)+1)$$
 
@@ -130,65 +136,66 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
         The more negative $w7$ is, the less the intervals of very mature cards will increase.
         
-        Here you can see the effect of $w7$: (https://www.geogebra.org/calculator/kyqjdspc)
+        [Here](https://www.geogebra.org/calculator/kyqjdspc) you can see in Geogebra the effect of $w7$.
 
         ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/w7.png)
 
         This sets a great advantage of FSRS & DSR Scheduler over standard Anki-SM2, to which this multiplication factor is almost constant, making intervals extremely large for very mature cards, increasing the chances of forgetting, as they do not consider the decay in memory consolidation!
     
-    - $w8$ is the recall Retrievability factor (default: `9.3`), modulating the desirable difficulty:
+- $w8$ is the recall Retrievability factor (default: `9.3`), modulating the desirable difficulty:
 
-        $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot S^{w_7}\cdot\boxed{(e^{(1-R^{w_8})}-1)}+1)$$
+    $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot S^{w_7}\cdot\boxed{(e^{(1-R^{w_8})}-1)}+1)$$
 
-        Retrievability is given by:
+    Retrievability is given by:
 
-        $$R(t,S) = 0.9^{\frac{t}{S}}$$
+    $$R(t,S) = 0.9^{\frac{t}{S}}$$
 
-        considering $t$ days since last review.
+    considering $t$ days since last review.
 
-        So, $R(t,S)=0.9$ when $t=S$, that is, when the card is reviewed is its due date. But Retrievability:
-        - Decreases if the card is overdued (reviewed later than scheduled)
-            0,82 if $t$ days elapsed are double the scheduled Stability.
-        - Increases if the card is reviewed before the due date.
-            0,95 $t$ days elapsed are half the scheduled Stability.
+    So, $R(t,S)=0.9$ when $t=S$, that is, when the card is reviewed is its due date. But Retrievability:
+    - Decreases if the card is overdued (reviewed later than scheduled)
+        0,82 if $t$ days elapsed are double the scheduled Stability.
+    - Increases if the card is reviewed before the due date.
+        0,95 $t$ days elapsed are half the scheduled Stability.
         
-        The less the Retrievability $R,$ the larger the $SInc$ (Stability increase factor; = Anki's factor), which means the desirable difficulty. In other words, if I recalled even when it was not that probable anymore (an overdued card), I can suppose the memory is more stable than initially anticipated. So, the Stability increase can be larger.
+    The less the Retrievability $R,$ the larger the $SInc$ (Stability increase factor; = Anki's factor), which means the desirable difficulty. In other words, if I recalled even when it was not that probable anymore (an overdued card), I can suppose the memory is more stable than initially anticipated. So, the Stability increase can be larger.
 
-        Looking at the formula, we can see that the larger the Retrievability, the power of "e" approaches zero, and as can be seen in the graph of the exponential function $y=e^x$ above, $e^0 = 1$, and the $w8$ term as a whole would be zero (that is, there would be no Stability increase if I review the card again in the same day I have already reviewed). But as the Retrievability decreases, the power of "e" approaches 1 and the term increases:
+    Looking at the formula, we can see that the larger the Retrievability, the power of "e" approaches zero, and as can be seen in the graph of the exponential function $y=e^x$ above, $e^0 = 1$, and the $w8$ term as a whole would be zero (that is, there would be no Stability increase if I review the card again in the same day I have already reviewed). But as the Retrievability decreases, the power of "e" approaches 1 and the term increases:
 
-        ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/w8_term.png)
+    ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/w8_term.png)
 
-        $w8$ therefore modulates this effect of Retrievability on next Stability (by which rate reviewing after or before the due date will increase / decrease next Stability, respectively). 
+    $w8$ therefore modulates this effect of Retrievability on next Stability (by which rate reviewing after or before the due date will increase / decrease next Stability, respectively). 
 
-        You can see the effect of changing $w8$ (and compare with the effect of doing this in FSRS) in Geogebra [here](https://www.geogebra.org/calculator/kbqchnep). The graph is on a bases of "overdueness", in which 1 means that $t=S$, 2 that $t=2S$ (the real interval was twice the scheduled interval), and so on.
+    You can see the effect of changing $w8$ (and compare with the effect of doing this in FSRS) in Geogebra [here](https://www.geogebra.org/calculator/kbqchnep). The graph is on a bases of "overdueness", in which 1 means that $t=S$, 2 that $t=2S$ (the real interval was twice the scheduled interval), and so on.
 
-        By increasing $w8$, you can limit the increase of Stability in case of very overdued cards (it must be done together with decreasing $w6$).
-        - Using a $w8$ of 9.3, the overdue bonus (that is, how much the next Stability will be increased because I reviewed late and yet recalled) will never be grater than 2. So, if I had a card with stability of 10 days, and reviewed it only after 100 days, the next Stability will be only twice as large as that if I had reviewed on scheduled date.
-        - In standard setting of FSRS, the overdue bonus for this same situation would be much larger (greater than 8). And if I had reviewed that same card (10 days of Stability) only after one year, the overdue bonus would be grater than 14!
-        - As I don't believe we can suppose that memory is that stable without a consistent review history, I made these changes in DSR Scheduler, to give a bonus for overdueness, but limit it to reasonable figures.
+    By increasing $w8$, you can limit the increase of Stability in case of very overdued cards (it must be done together with decreasing $w6$).
+    - Using a $w8$ of 9.3, the overdue bonus (that is, how much the next Stability will be increased because I reviewed late and yet recalled) will never be grater than 2. So, if I had a card with stability of 10 days, and reviewed it only after 100 days, the next Stability will be only twice as large as that if I had reviewed on scheduled date.
+    - In standard setting of FSRS, the overdue bonus for this same situation would be much larger (greater than 8). And if I had reviewed that same card (10 days of Stability) only after one year, the overdue bonus would be grater than 14!
+    - As I don't believe we can suppose that memory is that stable without a consistent review history, I made these changes in DSR Scheduler, to give a bonus for overdueness, but limit it to reasonable figures.
 
-        ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/overdue_bonus.png)
+    ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/overdue_bonus.png)
 
-- The *new Stability after FORGET* is similarly a function of Difficulty, current Stability and of the Retrievability, and is modulated by the last four weights:
+## New Stability after FORGET
+The *new Stability after FORGET* is similarly a function of Difficulty, current Stability and of the Retrievability, and is modulated by the last four weights:
 
-    - $w9$ forget factor (default: `2`), analogous to $w6$; 
+- $w9$ forget factor (default: `2`), analogous to $w6$; 
     
-        The larger it is, the less will be the penalty for having forgot, and the greater will be the new Stability (you won't have to start all over again). Thus, if you do not think that a lapse means that you have to do all the job again (if you believe the memory traces are still there, even though needing to be reinforced), do not use a too small figure here.
+    The larger it is, the less will be the penalty for having forgot, and the greater will be the new Stability (you won't have to start all over again). Thus, if you do not think that a lapse means that you have to do all the job again (if you believe the memory traces are still there, even though needing to be reinforced), do not use a too small figure here.
 
-    - $w10$ forget Difficulty decay (always negative, default: `-0.2`);
+- $w10$ forget Difficulty decay (always negative, default: `-0.2`);
 
-        If $w10$ is zero, $D^{w10}$ is one, independent of the Difficulty value (the $w10$ term would not affect the new Stability). When the negative figure is increased, however, the term $D^{w10}$ will give lower results for larger Difficulties (next to 10) and higher values for the easy stuff (D next to 1). The larger $w10$, the more Difficulty will influence the decay of the new Stability (that it, the more the new Stability will be decreased for the hard stuff, while not that much if the stuff is easy).
+    If $w10$ is zero, $D^{w10}$ is one, independent of the Difficulty value (the $w10$ term would not affect the new Stability). When the negative figure is increased, however, the term $D^{w10}$ will give lower results for larger Difficulties (next to 10) and higher values for the easy stuff (D next to 1). The larger $w10$, the more Difficulty will influence the decay of the new Stability (that it, the more the new Stability will be decreased for the hard stuff, while not that much if the stuff is easy).
 
-        Default value is -0.2.
+    Default value is -0.2.
 
-        You can see the effect of $w10$ in Geogebra [here](https://www.geogebra.org/calculator/kge5warg).
+    You can see the effect of $w10$ in Geogebra [here](https://www.geogebra.org/calculator/kge5warg).
 
-    - $w11$ forget Stability decay (default: `0.45`), analogous to $w7$;
-    - $w12$ forget Retrievability factor (default: `1`), analogous to $w8$.
+- $w11$ forget Stability decay (default: `0.45`), analogous to $w7$;
+- $w12$ forget Retrievability factor (default: `1`), analogous to $w8$.
 
-    $$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{(1-R^{w_{12}})}$$
+$$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{(1-R^{w_{12}})}$$
 
-    You can play the function in Geogebra [here](https://www.geogebra.org/calculator/rfjvmmpu).
+You can play the function in Geogebra [here](https://www.geogebra.org/calculator/rfjvmmpu).
 
 # Default parameters & Comparison DSR Scheduler x Anki 
 
