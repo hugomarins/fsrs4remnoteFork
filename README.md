@@ -83,64 +83,64 @@ The *new Difficulty after review* is modulated by two weights:
     
 - $w4$ (always negative; default: `-1`) is similar to $w3$, but modulates how much the Difficulty will be changed after a review (instead of after the first rating), by the formula:
 
-        $$D^\prime = D + w_4 \cdot (G - 3)$$
+    $$D^\prime = D + w_4 \cdot (G - 3)$$
 
-        where
-        $D^\prime$ is the new Difficulty after review, 
-        $D$ is the current Difficult (before the review) and
-        $G$ is the already mentioned "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy).
+    where
+    $D^\prime$ is the new Difficulty after review, 
+    $D$ is the current Difficult (before the review) and
+    $G$ is the already mentioned "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy).
 
-        So, it modulates:
-        - how much Difficulty will decrease if rating is "Easy";
-        - and how much Difficulty will increase if rating is "Hard".
-        - Difficulty will increase twice as much if rating is "Again".
+    So, it modulates:
+    - how much Difficulty will decrease if rating is "Easy";
+    - and how much Difficulty will increase if rating is "Hard".
+    - Difficulty will increase twice as much if rating is "Again".
     
 - But the new Difficult will be set only after applying the mean reversion to avoid "ease hell", modulated by $w5:$
 
-        $$w_5 \cdot D_0(3) + (1 - w_5) \cdot D^\prime$$
+    $$w_5 \cdot D_0(3) + (1 - w_5) \cdot D^\prime$$
 
-        where
-        $w_5$ is the mean reversion factor (to avoid "ease hell"),
-        $D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3), and
-        $D^\prime$ is the new Difficulty after review shown above.
+    where
+    $w_5$ is the mean reversion factor (to avoid "ease hell"),
+    $D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3), and
+    $D^\prime$ is the new Difficulty after review shown above.
 
-        The $w5$ default value of `0.2` means that only 80% of $D^\prime$ will vary with the ratings, and that the remaining 20% will not, tending to approach again the standard Difficulty (set in $w2$) asymptotically.
+    The $w5$ default value of `0.2` means that only 80% of $D^\prime$ will vary with the ratings, and that the remaining 20% will not, tending to approach again the standard Difficulty (set in $w2$) asymptotically.
     
 - So, the formula for the new Difficulty after review (as a function of current Difficulty before review and the Grade rated in the review) is:
 
-        $$D^\prime(D,G) = w_5 \cdot D_0(3) +(1 - w_5) \cdot (D + w_4 \cdot (G - 3))$$
+    $$D^\prime(D,G) = w_5 \cdot D_0(3) +(1 - w_5) \cdot (D + w_4 \cdot (G - 3))$$
 
-        where
-        $D^\prime$ is the new Difficulty after review,
-        $D$ is the current Difficult (before the review), 
-        $w_5$ is the mean reversion factor (to avoid "ease hell"),
-        $D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3),
-        $G$ is the "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy), and
-        $w_5$ is the factor that modulates how much the Difficulty will be changed after a review.
+    where
+    $D^\prime$ is the new Difficulty after review,
+    $D$ is the current Difficult (before the review), 
+    $w_5$ is the mean reversion factor (to avoid "ease hell"),
+    $D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3),
+    $G$ is the "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy), and
+    $w_5$ is the factor that modulates how much the Difficulty will be changed after a review.
 
 ## New Stability after RECALL
 The *new Stability after recall* is a function of Difficulty, current Stability and of the Retrievability, and is modulated by three weights:
 - $w6$ is the "recall factor" (default: `0.25`), and increases exponentially the next Stability (that is, the next interval):
 
-        $$S^\prime_r(D,S,R) = S\cdot(\boxed{e^{w_6}}\cdot (11-D)\cdot S^{w_7}\cdot(e^{(1-R^{w_8})}-1)+1)$$
+    $$S^\prime_r(D,S,R) = S\cdot(\boxed{e^{w_6}}\cdot (11-D)\cdot S^{w_7}\cdot(e^{(1-R^{w_8})}-1)+1)$$
 
-        Remember that the natural exponential function $y=e^x$ behaves in the following manner:
+    Remember that the natural exponential function $y=e^x$ behaves in the following manner:
         
-        ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/Exp.svg) 
+    ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/Exp.svg) 
 
 - $w7$ (always negative; default: `-0.41`) is the factor for the "recall Stability decay", modulating the marginal effect on the memory consolidation decay:
 
-        $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot \boxed{S^{w_7}}\cdot(e^{(1-R^w_8)}-1)+1)$$
+    $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot \boxed{S^{w_7}}\cdot(e^{(1-R^w_8)}-1)+1)$$
 
-        The larger the $S,$ the less the $SInc$ (Stability increase factor; = Anki's factor), which means the marginal effect on memory consolidation. In other words, the Stability (intervals) increases faster when the intervals are still short, but reduces the speed of increasing as the memory gets stable and intervals larger (that is a point in which the curve "flattens").
+    The larger the $S,$ the less the $SInc$ (Stability increase factor; = Anki's factor), which means the marginal effect on memory consolidation. In other words, the Stability (intervals) increases faster when the intervals are still short, but reduces the speed of increasing as the memory gets stable and intervals larger (that is a point in which the curve "flattens").
 
-        The more negative $w7$ is, the less the intervals of very mature cards will increase.
+    The more negative $w7$ is, the less the intervals of very mature cards will increase.
         
-        [Here](https://www.geogebra.org/calculator/kyqjdspc) you can see in Geogebra the effect of $w7$.
+    [Here](https://www.geogebra.org/calculator/kyqjdspc) you can see in Geogebra the effect of $w7$.
 
-        ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/w7.png)
+    ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/w7.png)
 
-        This sets a great advantage of FSRS & DSR Scheduler over standard Anki-SM2, to which this multiplication factor is almost constant, making intervals extremely large for very mature cards, increasing the chances of forgetting, as they do not consider the decay in memory consolidation!
+    This sets a great advantage of FSRS & DSR Scheduler over standard Anki-SM2, to which this multiplication factor is almost constant, making intervals extremely large for very mature cards, increasing the chances of forgetting, as they do not consider the decay in memory consolidation!
     
 - $w8$ is the recall Retrievability factor (default: `9.3`), modulating the desirable difficulty:
 
