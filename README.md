@@ -49,9 +49,9 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
 # Setting the Weights
 
-- $w0$ is the initial Stability when the first rating is "Again".
+- $w0$ is the initial Stability when the first rating is "Again". (Default: `1`)
 
-- $w1$ will set the initial Stability when the first rating is other than "Again", by the formula:
+- $w1$ (default: `2.5`) will set the initial Stability when the first rating is other than "Again", by the formula:
     
     $$S_0(G) = w_0 + (G-1) \cdot w_1$$
     
@@ -59,9 +59,9 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
     $S_0$ is the initial Stability, and
     $G$ is the "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy).
 
-- $w2$ is the initial Difficulty when the first rating is "Good".
+- $w2$ is the initial Difficulty when the first rating is "Good". (Default: `5`)
 
-- $w3$ (always negative) modulates how much the Difficulty will be changed if first rating is not "Good", by the formula:
+- $w3$ (always negative; default: `-1`) modulates how much the Difficulty will be changed if first rating is not "Good", by the formula:
     
     $$D_0(G) = w_2 + (G-3) \cdot w_3$$
 
@@ -76,7 +76,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
 - The *new Difficulty after review* is modulated by two weights: 
     
-    - $w4$ (always negative) is similar to $w3$, but modulates how much the Difficulty will be changed after a review (instead of after the first rating), by the formula:
+    - $w4$ (always negative; default: `-1`) is similar to $w3$, but modulates how much the Difficulty will be changed after a review (instead of after the first rating), by the formula:
 
         $$D^\prime = D + w_4 \cdot (G - 3)$$
 
@@ -86,9 +86,9 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
         $G$ is the already mentioned "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy).
 
         So, it modulates:
-            - how much Difficulty will decrease if rating is "Easy";
-            - and how much Difficulty will increase if rating is "Hard".
-            - Difficulty will increase twice as much if rating is "Again".
+        - how much Difficulty will decrease if rating is "Easy";
+        - and how much Difficulty will increase if rating is "Hard".
+        - Difficulty will increase twice as much if rating is "Again".
     
     - But the new Difficult will be set only after applying the mean reversion to avoid "ease hell", modulated by $w5:$
 
@@ -99,7 +99,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
         $D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3), and
         $D^\prime$ is the new Difficulty after review shown above.
 
-        The $w5$ default value of "0.2" means that only 80% of $D^\prime$ will vary with the ratings, and that the remaining 20% will not, tending approach again the standard Difficulty (set in $w2$) asymptotically.
+        The $w5$ default value of `0.2` means that only 80% of $D^\prime$ will vary with the ratings, and that the remaining 20% will not, tending approach again the standard Difficulty (set in $w2$) asymptotically.
     
     - So, the formula for the new Difficulty after review (as a function of current Difficulty before review and the Grade rated in the review) is:
 
@@ -114,7 +114,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
         $w_5$ is the factor that modulates how much the Difficulty will be changed after a review.
 
 - The *new Stability after recall* is a function of Difficulty, current Stability and of the Retrievability, and is modulated by three weights:
-    - $w6$ is the "recall factor", and increases exponentially the next Stability (that is, the next interval):
+    - $w6$ is the "recall factor" (default: `0.25`), and increases exponentially the next Stability (that is, the next interval):
 
         $$S^\prime_r(D,S,R) = S\cdot(\boxed{e^{w_6}}\cdot (11-D)\cdot S^{w_7}\cdot(e^{(1-R^{w_8})}-1)+1)$$
 
@@ -122,7 +122,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
         
         ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/Exp.svg) 
 
-    - $w7$ (always negative) is the factor for the "recall Stability decay", modulating the marginal effect on the memory consolidation decay:
+    - $w7$ (always negative; default: `-0.41`) is the factor for the "recall Stability decay", modulating the marginal effect on the memory consolidation decay:
 
         $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot \boxed{S^{w_7}}\cdot(e^{(1-R^w_8)}-1)+1)$$
 
@@ -136,7 +136,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
         This sets a great advantage of FSRS & DSR Scheduler over standard Anki-SM2, to which this multiplication factor is almost constant, making intervals extremely large for very mature cards, increasing the chances of forgetting, as they do not consider the decay in memory consolidation!
     
-    - $w8$ is the recall Retrievability factor, modulating the desirable difficulty:
+    - $w8$ is the recall Retrievability factor (default: `9.3`), modulating the desirable difficulty:
 
         $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot S^{w_7}\cdot\boxed{(e^{(1-R^{w_8})}-1)}+1)$$
 
@@ -171,11 +171,11 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
 - The *new Stability after FORGET* is similarly a function of Difficulty, current Stability and of the Retrievability, and is modulated by the last four weights:
 
-    - $w9$ forget factor, analogous to $w6$; 
+    - $w9$ forget factor (default: `2`), analogous to $w6$; 
     
         The larger it is, the less will be the penalty for having forgot, and the greater will be the new Stability (you won't have to start all over again). Thus, if you do not think that a lapse means that you have to do all the job again (if you believe the memory traces are still there, even though needing to be reinforced), do not use a too small figure here.
 
-    - $w10$ forget Difficulty decay (always negative);
+    - $w10$ forget Difficulty decay (always negative, default: `-0.2`);
 
         If $w10$ is zero, $D^{w10}$ is one, independent of the Difficulty value (the $w10$ term would not affect the new Stability). When the negative figure is increased, however, the term $D^{w10}$ will give lower results for larger Difficulties (next to 10) and higher values for the easy stuff (D next to 1). The larger $w10$, the more Difficulty will influence the decay of the new Stability (that it, the more the new Stability will be decreased for the hard stuff, while not that much if the stuff is easy).
 
@@ -183,8 +183,8 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
         You can see the effect of $w10$ in https://www.geogebra.org/calculator/kge5warg.
 
-    - $w11$ forget Stability decay, analogous to $w7$;
-    - $w12$ forget Retrievability factor, analogous to $w8$.
+    - $w11$ forget Stability decay (default: `0.45`), analogous to $w7$;
+    - $w12$ forget Retrievability factor (default: `1`), analogous to $w8$.
 
     $$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{(1-R^{w_{12}})}$$
 
