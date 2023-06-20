@@ -1,6 +1,6 @@
 # DSR Scheduler: A FSRS4RemNote fork
 
-DSR Scheduler is a fork of FSRS4RemNote (https://github.com/open-spaced-repetition/fsrs4remnote).
+DSR Scheduler is a fork of [FSRS4RemNote](https://github.com/open-spaced-repetition/fsrs4remnote).
 
 FSRS4RemNote is a custom scheduler plugin for RemNote implementing the Free Spaced Repetition Scheduler, based on the [DSR](https://supermemo.guru/wiki/Two_components_of_memory) (Difficulty, Stability, Retrievability) model proposed by [Piotr Wozniak](https://supermemo.guru/wiki/Piotr_Wozniak), the author of SuperMemo, and improved with the DHP (Difficulty, Half-life, Probability of recall) model introduced in the paper: [A Stochastic Shortest Path Algorithm for Optimizing Spaced Repetition Scheduling](https://www.maimemo.com/paper/).
 
@@ -34,7 +34,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
     where $R(t,S)=0.9$ when $t=S.$
 
-- *Stability* is the storage strength of memory (interval when R=90%). The higher it is, the slower it is forgotten. Its analogous to the concept of ideal next interval in Anki.
+- *Stability* is the storage strength of memory (interval when R=90%). The higher it is, the slower it is forgotten. It is the number of days it takes for the retention to decay from 100% to 90%. It is analogous to the concept of ideal next interval in Anki.
 
     - *Memory stabilization*: increase in memory Stability as a result of the retrieval of a memory (e.g. in review). (abbreviated SInc for stability increase in SuperMemo)
 
@@ -99,7 +99,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
         $D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3), and
         $D^\prime$ is the new Difficulty after review shown above.
 
-        The $w5$ default value of `0.2` means that only 80% of $D^\prime$ will vary with the ratings, and that the remaining 20% will not, tending approach again the standard Difficulty (set in $w2$) asymptotically.
+        The $w5$ default value of `0.2` means that only 80% of $D^\prime$ will vary with the ratings, and that the remaining 20% will not, tending to approach again the standard Difficulty (set in $w2$) asymptotically.
     
     - So, the formula for the new Difficulty after review (as a function of current Difficulty before review and the Grade rated in the review) is:
 
@@ -160,7 +160,7 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
         $w8$ therefore modulates this effect of Retrievability on next Stability (by which rate reviewing after or before the due date will increase / decrease next Stability, respectively). 
 
-        You can see the effect of changing $w8$ (and compare with the effect of doing this in FSRS) in https://www.geogebra.org/calculator/kbqchnep. The graph is on a bases of "overdueness", in which 1 means that $t=S$, 2 that $t=2S$ (the real interval was twice the scheduled interval), and so on.
+        You can see the effect of changing $w8$ (and compare with the effect of doing this in FSRS) in Geogebra [here](https://www.geogebra.org/calculator/kbqchnep). The graph is on a bases of "overdueness", in which 1 means that $t=S$, 2 that $t=2S$ (the real interval was twice the scheduled interval), and so on.
 
         By increasing $w8$, you can limit the increase of Stability in case of very overdued cards (it must be done together with decreasing $w6$).
         - Using a $w8$ of 9.3, the overdue bonus (that is, how much the next Stability will be increased because I reviewed late and yet recalled) will never be grater than 2. So, if I had a card with stability of 10 days, and reviewed it only after 100 days, the next Stability will be only twice as large as that if I had reviewed on scheduled date.
@@ -181,14 +181,14 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
 
         Default value is -0.2.
 
-        You can see the effect of $w10$ in https://www.geogebra.org/calculator/kge5warg.
+        You can see the effect of $w10$ in Geogebra [here](https://www.geogebra.org/calculator/kge5warg).
 
     - $w11$ forget Stability decay (default: `0.45`), analogous to $w7$;
     - $w12$ forget Retrievability factor (default: `1`), analogous to $w8$.
 
     $$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{(1-R^{w_{12}})}$$
 
-    You can play the function in https://www.geogebra.org/calculator/rfjvmmpu.
+    You can play the function in Geogebra [here](https://www.geogebra.org/calculator/rfjvmmpu).
 
 # Default parameters & Comparison DSR Scheduler x Anki 
 
@@ -215,7 +215,7 @@ The graph shows that this scheduler allows for the Stabilization decay, what is 
 
 Yet, you can have much larger intervals in the beginning (young cards), spending less time with reviews that you don't need.
 
-You can play with other settings here https://www.geogebra.org/calculator/qdgnh2ab.
+You can play with other settings in Geobebra [here](https://www.geogebra.org/calculator/qdgnh2ab).
 
 ## Usage
 
