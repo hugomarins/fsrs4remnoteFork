@@ -79,6 +79,54 @@ export const defaultParameters = {
         arg: 0,
       },
     ]
+  },
+  [SchedulerParam.AgainStep]: {
+    id: SchedulerParam.AgainStep,
+    title: SchedulerParam.AgainStep,
+    defaultValue: 1,
+    description: "Delay (in MINUTES) that will be used when you press the Again button on a new card. The card will be shown again after this delay, and if you pass, the card will receive the initial Stability set in w0. The delay set here will also be used to 'relearn' when you fail a review card.",
+    type: 'number' as const,
+    validators: [
+      {
+        type: "int" as const
+      },
+      {
+        type: "gte" as const,
+        arg: 0,
+      },
+    ]
+  },
+  [SchedulerParam.HardStep]: {
+    id: SchedulerParam.HardStep,
+    title: SchedulerParam.HardStep,
+    defaultValue: 10,
+    description: "Delay (in MINUTES) that will be used when you press the Hard button on a new card. The card will be shown again after this delay, and if you pass, the card will receive as initial Stability w0 + w1.",
+    type: 'number' as const,
+    validators: [
+      {
+        type: "int" as const
+      },
+      {
+        type: "gte" as const,
+        arg: 0,
+      },
+    ]
+  },
+  [SchedulerParam.GoodStep]: {
+    id: SchedulerParam.GoodStep,
+    title: SchedulerParam.GoodStep,
+    defaultValue: 1440,
+    description: "Delay (in MINUTES) that will be used when you press the Good button on a new card. The card will be shown again after this delay, and if you pass, the card will receive as initial Stability w0 + (2 x w1).",
+    type: 'number' as const,
+    validators: [
+      {
+        type: "int" as const
+      },
+      {
+        type: "gte" as const,
+        arg: 0,
+      },
+    ]
   }
 };
 

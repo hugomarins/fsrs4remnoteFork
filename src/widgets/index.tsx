@@ -60,6 +60,9 @@ async function onActivate(plugin: ReactRNPlugin) {
       [SchedulerParam.MaximumInterval]: maximumInterval,
       [SchedulerParam.EasyBonus]: easyBonus,
       [SchedulerParam.HardInterval]: hardInterval,
+      [SchedulerParam.AgainStep]: againStep,
+      [SchedulerParam.HardStep]: hardStep,
+      [SchedulerParam.GoodStep]: goodStep,
     } = schedulerParameters as SchedulerParameterTypes;
 
     const w = weightsStr.split(', ').map(x => Number(x));
@@ -91,10 +94,10 @@ async function onActivate(plugin: ReactRNPlugin) {
     if (customData.stage == Stage.New) {
       newCustomData = init_states(convertedScore);
       scheduleDays =
-      convertedScore == Rating.Again ? 1 / 1440
-      : convertedScore == Rating.Hard ? 10 / 1440
-      : convertedScore == Rating.Good ? 1
-      : convertedScore == Rating.Easy ? 10
+      convertedScore == Rating.Again ? againStep / 1440
+      : convertedScore == Rating.Hard ? hardStep / 1440
+      : convertedScore == Rating.Good ? goodStep / 1440
+      : convertedScore == Rating.Easy ? next_interval(newCustomData.stability * easyBonus)
       : null!;
     } else if (customData.stage == Stage.Review) {
       const elapsedDays = (new Date(lastRep.date).getTime() - new Date(customData.lastReview).getTime()) / (1000 * 60 * 60 * 24)
@@ -103,7 +106,7 @@ async function onActivate(plugin: ReactRNPlugin) {
       let goodIvl = Math.max(next_interval(newCustomData.stability), hardIvl+1)
       let easyIvl = Math.max(next_interval(newCustomData.stability * easyBonus), goodIvl+1)
       scheduleDays =
-      convertedScore == Rating.Again ? 1 / 1440
+      convertedScore == Rating.Again ? againStep / 1440
       : convertedScore == Rating.Hard ? hardIvl
       : convertedScore == Rating.Good ? goodIvl
       : convertedScore == Rating.Easy ? easyIvl
@@ -112,8 +115,8 @@ async function onActivate(plugin: ReactRNPlugin) {
       let goodIvl = next_interval(newCustomData.stability)
       let easyIvl = Math.max(next_interval(newCustomData.stability * easyBonus), goodIvl+1)
       scheduleDays = 
-      convertedScore == Rating.Again ? 5 / 1440
-      : convertedScore == Rating.Hard ? 10 / 1440
+      convertedScore == Rating.Again ? againStep / 1440
+      : convertedScore == Rating.Hard ? hardStep / 1440
       : convertedScore == Rating.Good ? goodIvl
       : convertedScore == Rating.Easy ? easyIvl
       : null!;

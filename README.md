@@ -18,12 +18,11 @@ $$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{(1-R^{w_{12}})
 
 Also, new stability after rating "Hard" has been corrected to be the `last stability * hard interval`. This is to avoid the FSRS strange behavior of, after rating "Hard", on next review the proposed next interval in case of pressing "Hard" once more being too long, almost the same of that of pressing "Good". [Being tested yet]
 
-Other minor changes:
-- For new cards, learning steps were adjusted:
-    - 1 min after rating "Again";
-    - 10 min after rating "Hard";
-    - 1 day after rating "Good";
-    - 10 days after rating "Easy".
+Another change is that for *new cards*, learning steps can now be set in `Settings > Custom Schedulers`. Default parameters are:
+- 1 min after rating "Again";
+- 10 min after rating "Hard";
+- 1 day after rating "Good".
+(rating "Easy" jumps the learning phase and yet give the Easy Bonus; the card will receive an interval of $(w_0 + (3 \cdot w_1)) \cdot \text{Easy bonus}$, around 11 days using default settings)
 
 # Concepts and underlaying principles
 
@@ -100,7 +99,7 @@ Other minor changes:
         $D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3), and
         $D^\prime$ is the new Difficulty after review shown above.
 
-        The $w5$ default value of "0.1" means that only 90% of $D^\prime$ will vary with the ratings, and that the remaining 10% will not, tending approach again the standard Difficulty (set in $w2$) asymptotically.
+        The $w5$ default value of "0.2" means that only 80% of $D^\prime$ will vary with the ratings, and that the remaining 20% will not, tending approach again the standard Difficulty (set in $w2$) asymptotically.
     
     - So, the formula for the new Difficulty after review (as a function of current Difficulty before review and the Grade rated in the review) is:
 
