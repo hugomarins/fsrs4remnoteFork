@@ -102,9 +102,9 @@ async function onActivate(plugin: ReactRNPlugin) {
     } else if (customData.stage == Stage.Review) {
       const elapsedDays = (new Date(lastRep.date).getTime() - new Date(customData.lastReview).getTime()) / (1000 * 60 * 60 * 24)
       newCustomData = next_states(convertedScore, customData, elapsedDays)
-      let hardIvl = next_interval(customData.stability * hardInterval)
+      let hardIvl = next_interval(newCustomData.stability)
       let goodIvl = Math.max(next_interval(newCustomData.stability), hardIvl+1)
-      let easyIvl = Math.max(next_interval(newCustomData.stability * easyBonus), goodIvl+1)
+      let easyIvl = Math.max(next_interval(newCustomData.stability), goodIvl+1)
       scheduleDays =
       convertedScore == Rating.Again ? againStep / 1440
       : convertedScore == Rating.Hard ? hardIvl
@@ -186,7 +186,9 @@ async function onActivate(plugin: ReactRNPlugin) {
           next_s = next_forget_stability(next_d, last_states.stability, retrievability)
       } else if (rating == Rating.Hard) {
         next_s =  last_states.stability * hardInterval
-    } else {
+      } else if (rating == Rating.Easy) {
+      next_s = next_recall_stability(next_d, last_states.stability, retrievability) * easyBonus
+      } else {
           next_s = next_recall_stability(next_d, last_states.stability, retrievability)
       }
       return {
