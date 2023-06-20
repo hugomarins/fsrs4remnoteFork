@@ -106,17 +106,17 @@ The *new Difficulty after review* is modulated by two weights:
 
     The $w5$ default value of `0.2` means that only 80% of $D^\prime$ will vary with the ratings, and that the remaining 20% will not, tending to approach again the standard Difficulty (set in $w2$) asymptotically.
     
-- So, the formula for the new Difficulty after review (as a function of current Difficulty before review and the Grade rated in the review) is:
+So, the formula for the new Difficulty after review (as a function of current Difficulty before review and the Grade rated in the review) is:
 
-    $$D^\prime(D,G) = w_5 \cdot D_0(3) +(1 - w_5) \cdot (D + w_4 \cdot (G - 3))$$
+$$D^\prime(D,G) = w_5 \cdot D_0(3) +(1 - w_5) \cdot (D + w_4 \cdot (G - 3))$$
 
-    where
-    $D^\prime$ is the new Difficulty after review,
-    $D$ is the current Difficult (before the review), 
-    $w_5$ is the mean reversion factor (to avoid "ease hell"),
-    $D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3),
-    $G$ is the "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy), and
-    $w_5$ is the factor that modulates how much the Difficulty will be changed after a review.
+where
+$D^\prime$ is the new Difficulty after review,
+$D$ is the current Difficult (before the review), 
+$w_5$ is the mean reversion factor (to avoid "ease hell"),
+$D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3),
+$G$ is the "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy), and
+$w_5$ is the factor that modulates how much the Difficulty will be changed after a review.
 
 ## New Stability after RECALL
 The *new Stability after recall* is a function of Difficulty, current Stability and of the Retrievability, and is modulated by three weights:
@@ -154,9 +154,9 @@ The *new Stability after recall* is a function of Difficulty, current Stability 
 
     So, $R(t,S)=0.9$ when $t=S$, that is, when the card is reviewed is its due date. But Retrievability:
     - Decreases if the card is overdued (reviewed later than scheduled)
-        0,82 if $t$ days elapsed are double the scheduled Stability.
+    0,82 if $t$ days elapsed are double the scheduled Stability.
     - Increases if the card is reviewed before the due date.
-        0,95 $t$ days elapsed are half the scheduled Stability.
+    0,95 $t$ days elapsed are half the scheduled Stability.
         
     The less the Retrievability $R,$ the larger the $SInc$ (Stability increase factor; = Anki's factor), which means the desirable difficulty. In other words, if I recalled even when it was not that probable anymore (an overdued card), I can suppose the memory is more stable than initially anticipated. So, the Stability increase can be larger.
 
@@ -185,8 +185,6 @@ The *new Stability after FORGET* is similarly a function of Difficulty, current 
 - $w10$ forget Difficulty decay (always negative, default: `-0.2`);
 
     If $w10$ is zero, $D^{w10}$ is one, independent of the Difficulty value (the $w10$ term would not affect the new Stability). When the negative figure is increased, however, the term $D^{w10}$ will give lower results for larger Difficulties (next to 10) and higher values for the easy stuff (D next to 1). The larger $w10$, the more Difficulty will influence the decay of the new Stability (that it, the more the new Stability will be decreased for the hard stuff, while not that much if the stuff is easy).
-
-    Default value is -0.2.
 
     You can see the effect of $w10$ in Geogebra [here](https://www.geogebra.org/calculator/kge5warg).
 
