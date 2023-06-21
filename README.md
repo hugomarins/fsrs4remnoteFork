@@ -16,7 +16,7 @@ $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot S^{w_7}\cdot(e^{(1-R^{w_8}
 
 $$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{(1-R^{w_{12}})}$$
 
-This change is relevant specially for those who have a large backlog and decks that have been dormant for a very large period. I hope this will help you catch up on your backlog. More about this will be said when explaining $w8$ [setting](##New-Stability-after-RECALL).
+This change is relevant specially for those who have a large backlog and decks that have been stale and dormant for a very large period. I hope this will help you catch up on your backlog. More about this will be said when explaining $w8$ [setting](##New-Stability-after-RECALL).
 
 Also, the distinction between new stability and new interval was removed. New Stability after rating "Hard" has been corrected to be the `last stability * hard interval`; and new Stability after rating "Easy" has been corrected to be the `Next_recall_stability * EasyBonus`. This is to avoid the FSRS strange behavior of, after rating "Hard", on next review the proposed next interval in case of pressing "Hard" once more being too long, almost the same of that of pressing "Good". The inverse situation happened when "Easy" was pressed (pressing Easy subsequently would give a next Stability smaller than it should).[Being tested yet]
 
@@ -179,18 +179,18 @@ The *new Stability after recall* is a function of Difficulty, current Stability 
 ## New Stability after FORGET
 The *new Stability after FORGET* is similarly a function of Difficulty, current Stability and of the Retrievability, and is modulated by the last four weights:
 
-- $w9$ forget factor (default: `2`), analogous to $w6$; 
+- $w9$ **forget factor** (default: `2`), analogous to $w6$; 
     
     The larger it is, the less will be the penalty for having forgot, and the greater will be the new Stability (you won't have to start all over again). Thus, if you do not think that a lapse means that you have to do all the job again (if you believe the memory traces are still there, even though needing to be reinforced), do not use a too small figure here.
 
-- $w10$ forget Difficulty decay (always negative, default: `-0.2`);
+- $w10$ **forget Difficulty decay** (always negative, default: `-0.2`);
 
     If $w10$ is zero, $D^{w10}$ is one, independent of the Difficulty value (the $w10$ term would not affect the new Stability). When the negative figure is increased, however, the term $D^{w10}$ will give lower results for larger Difficulties (next to 10) and higher values for the easy stuff (D next to 1). The larger $w10$, the more Difficulty will influence the decay of the new Stability (that it, the more the new Stability will be decreased for the hard stuff, while not that much if the stuff is easy).
 
     You can see the effect of $w10$ in Geogebra [here](https://www.geogebra.org/calculator/kge5warg).
 
-- $w11$ forget Stability decay (default: `0.45`), analogous to $w7$;
-- $w12$ forget Retrievability factor (default: `1`), analogous to $w8$.
+- $w11$ **forget Stability decay** (default: `0.45`), analogous to $w7$;
+- $w12$ **forget Retrievability factor** (default: `1`), analogous to $w8$.
 
 $$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{(1-R^{w_{12}})}$$
 
@@ -198,9 +198,9 @@ You can play the function in Geogebra [here](https://www.geogebra.org/calculator
 
 # Default parameters & Comparison DSR Scheduler x Anki 
 
-*Default parameters*: [`1, 2.5, 5, -1, -1, 0.2, 0.25, -0.41, 9.3, 2, -0.2, 0.45, 1`]
+***Default parameters***: [`1, 2.5, 5, -1, -1, 0.2, 0.25, -0.41, 9.3, 2, -0.2, 0.45, 1`]
 
-Caveat: Unlike FSRS suggested parameters, that were preceded of extensive study, primarily with language learners databases, and that focus on achieving the desired retrievability, the default parameters suggested above are focused in giving a desired behavior of intervals that meet my needs in studying specific educational material, tested only in myself, and that I suppose can be extrapolated to normal educational material (but not for learning vocabulary of foreign languages). The focus is to give higher intervals (than in Anki behavior) when the card is yet young, but after the card being very mature, avoid too large intervals, allowing for the stabilization decay explained in the Concepts section above.
+**Caveat**: Unlike FSRS suggested parameters, that were preceded of extensive study, primarily with language learners databases, and that focus on achieving the desired retrievability, the default parameters suggested above are focused in giving a desired behavior of intervals that meet my needs in studying specific educational material, tested only in myself, and that I suppose can be extrapolated to normal educational material (but not for learning vocabulary of foreign languages). The focus is to give higher intervals (than in Anki behavior) when the card is yet young, but after the card being very mature, avoid too large intervals, allowing for the stabilization decay explained in the Concepts section above.
 
 The intervals if always rating "Good" for the first 10 repetitions (including learning steps) is shown below. Those of default settings for Anki and for FSRS are also shown for comparison:
 
