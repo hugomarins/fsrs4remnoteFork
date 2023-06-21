@@ -6,8 +6,8 @@
   "repoUrl": "https://github.com/hugomarins/fsrs4remnoteFork",
   "version": {
     "major": 0,
-    "minor": 0,
-    "patch": 7
+    "minor": 1,
+    "patch": 1
   },
   "theme": [],
   "enableOnMobile": true,
