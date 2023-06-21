@@ -58,8 +58,8 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
     
     $$S_0(G) = w_0 + (G-1) \cdot w_1$$
     
-    where 
-    $S_0$ is the initial Stability, and
+    where  
+    $S_0$ is the initial Stability, and  
     $G$ is the "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy).
 
 ## Initial Difficulty
@@ -69,8 +69,8 @@ Another change is that for *new cards*, learning steps can now be set in `Settin
     
     $$D_0(G) = w_2 + (G-3) \cdot w_3$$
 
-    where
-    $D_0$ is the initial Difficulty, and
+    where  
+    $D_0$ is the initial Difficulty, and  
     $G$ is the already mentioned "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy).
 
     So, it modulates:
@@ -85,9 +85,9 @@ The *new Difficulty after review* is modulated by two weights:
 
     $$D^\prime = D + w_4 \cdot (G - 3)$$
 
-    where
-    $D^\prime$ is the new Difficulty after review, 
-    $D$ is the current Difficult (before the review) and
+    where  
+    $D^\prime$ is the new Difficulty after review,  
+    $D$ is the current Difficult (before the review) and  
     $G$ is the already mentioned "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy).
 
     So, it modulates:
@@ -95,13 +95,13 @@ The *new Difficulty after review* is modulated by two weights:
     - and how much Difficulty will increase if rating is "Hard".
     - Difficulty will increase twice as much if rating is "Again".
     
-- But the new Difficult will be set only after applying the mean reversion to avoid "ease hell", modulated by $w5:$
+- But the new Difficult will be set only after applying the **mean reversion to avoid "ease hell"**, modulated by $w5:$
 
     $$w_5 \cdot D_0(3) + (1 - w_5) \cdot D^\prime$$
 
-    where
-    $w_5$ is the mean reversion factor (to avoid "ease hell"),
-    $D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3), and
+    where  
+    $w_5$ is the mean reversion factor (to avoid "ease hell"),  
+    $D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3), and  
     $D^\prime$ is the new Difficulty after review shown above.
 
     The $w5$ default value of `0.2` means that only 80% of $D^\prime$ will vary with the ratings, and that the remaining 20% will not, tending to approach again the standard Difficulty (set in $w2$) asymptotically.
@@ -110,17 +110,17 @@ So, the formula for the new Difficulty after review (as a function of current Di
 
 $$D^\prime(D,G) = w_5 \cdot D_0(3) +(1 - w_5) \cdot (D + w_4 \cdot (G - 3))$$
 
-where
-$D^\prime$ is the new Difficulty after review,
-$D$ is the current Difficult (before the review), 
-$w_5$ is the mean reversion factor (to avoid "ease hell"),
-$D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3),
-$G$ is the "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy), and
+where  
+$D^\prime$ is the new Difficulty after review,  
+$D$ is the current Difficult (before the review),  
+$w_5$ is the mean reversion factor (to avoid "ease hell"),  
+$D_0(3)$ is the initial Difficulty when first rating is "Good" (Grade = 3),  
+$G$ is the "Grade" (1 - Again; 2 - Hard; 3 - Good; 4 - Easy), and  
 $w_5$ is the factor that modulates how much the Difficulty will be changed after a review.
 
 ## New Stability after RECALL
 The *new Stability after recall* is a function of Difficulty, current Stability and of the Retrievability, and is modulated by three weights:
-- $w6$ is the "recall factor" (default: `0.25`), and increases exponentially the next Stability (that is, the next interval):
+- $w6$ is the "**recall factor**" (default: `0.25`), and *increases exponentially the next Stability* (that is, the next interval):
 
     $$S^\prime_r(D,S,R) = S\cdot(\boxed{e^{w_6}}\cdot (11-D)\cdot S^{w_7}\cdot(e^{(1-R^{w_8})}-1)+1)$$
 
@@ -128,7 +128,7 @@ The *new Stability after recall* is a function of Difficulty, current Stability 
         
     ![](https://raw.githubusercontent.com/hugomarins/fsrs4remnoteFork/main/public/Exp.svg) 
 
-- $w7$ (always negative; default: `-0.41`) is the factor for the "recall Stability decay", modulating the marginal effect on the memory consolidation decay:
+- $w7$ (always negative; default: `-0.41`) is the factor for the "**recall Stability decay**", modulating the **marginal effect on the memory consolidation decay**:
 
     $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot \boxed{S^{w_7}}\cdot(e^{(1-R^w_8)}-1)+1)$$
 
@@ -142,7 +142,7 @@ The *new Stability after recall* is a function of Difficulty, current Stability 
 
     This sets a great advantage of FSRS & DSR Scheduler over standard Anki-SM2, to which this multiplication factor is almost constant, making intervals extremely large for very mature cards, increasing the chances of forgetting, as they do not consider the decay in memory consolidation!
     
-- $w8$ is the recall Retrievability factor (default: `9.3`), modulating the desirable difficulty:
+- $w8$ is the **recall Retrievability factor** (default: `9.3`), modulating *how Retrievability affects stabilization*:
 
     $$S^\prime_r(D,S,R) = S\cdot(e^{w_6}\cdot (11-D)\cdot S^{w_7}\cdot\boxed{(e^{(1-R^{w_8})}-1)}+1)$$
 
@@ -153,10 +153,11 @@ The *new Stability after recall* is a function of Difficulty, current Stability 
     considering $t$ days since last review.
 
     So, $R(t,S)=0.9$ when $t=S$, that is, when the card is reviewed is its due date. But Retrievability:
-    - Decreases if the card is overdued (reviewed later than scheduled)
-    0,82 if $t$ days elapsed are double the scheduled Stability.
-    - Increases if the card is reviewed before the due date.
-    0,95 $t$ days elapsed are half the scheduled Stability.
+    - Decreases if the card is overdued (reviewed later than scheduled)  
+        0,82 if $t$ days elapsed are double the scheduled Stability.
+
+    - Increases if the card is reviewed before the due date.  
+        0,95 $t$ days elapsed are half the scheduled Stability.
         
     The less the Retrievability $R,$ the larger the $SInc$ (Stability increase factor; = Anki's factor), which means the desirable difficulty. In other words, if I recalled even when it was not that probable anymore (an overdued card), I can suppose the memory is more stable than initially anticipated. So, the Stability increase can be larger.
 
