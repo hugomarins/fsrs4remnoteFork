@@ -225,7 +225,7 @@ You can play the function in Geogebra [here](https://www.geogebra.org/calculator
 
 # Default parameters & Comparison DSR Scheduler x Anki 
 
-***Default parameters***: [`1, 2.5, 5, -1, -1, 0.2, 0.25, -0.41, 9.3, 2, -0.2, 0.45, 1`]
+***Default parameters***: [`1, 3, 4.1, -1.5, -1.5, 0.2, 0.25, -0.41, 9.3, 2, -0.2, 0.5, 1`]
 
 **Caveat**: Unlike FSRS suggested parameters, that were preceded of extensive study, primarily with language learners databases, and that focus on achieving the desired retrievability, the default parameters suggested above are focused in giving a desired behavior of intervals that meet my needs in studying specific educational material, tested only in myself, and that I suppose can be extrapolated to normal educational material (but not for learning vocabulary of foreign languages). The focus is to give higher intervals (than in Anki behavior) when the card is yet young, but after the card being very mature, avoid too large intervals, allowing for the stabilization decay explained in the Concepts section above.
 
