@@ -8,6 +8,8 @@ The scheduler is based on a variant of the DSR  model, which is used to predict 
 
 (Read this Read Me file on [GitHub](https://github.com/hugomarins/fsrs4remnoteFork) for better visualization.)
 
+DO NOT USE FSRS OPTIMIZER TO OBTAIN YOUR WEIGHTS (as this Fork changes the formula for calculating new stability, so that there is no direct correspondence of the standard FSRS weights and the weights of this fork).
+
 # DSR Scheduler changes to standard FSRS4RemNote behavior
 
 The formulas for new stability after recall and new stability after forgetting have been reshaped, in order to ensure $w8$ and $w12$ really modulates the retrievability weight on the next stability. 
