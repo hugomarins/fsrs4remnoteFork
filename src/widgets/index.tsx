@@ -232,7 +232,7 @@ async function onActivate(plugin: ReactRNPlugin) {
       if (rating == Rating.Again) {
           next_s = next_forget_stability(next_d, last_states.stability, retrievability)
       } else if (rating == Rating.Hard) {
-        next_s =  last_states.stability * hardInterval
+        next_s =  next_recall_stability(next_d, last_states.stability, retrievability) * hardInterval
       } else if (rating == Rating.Easy) {
       next_s = next_recall_stability(next_d, last_states.stability, retrievability) * easyBonus
       } else {

@@ -22,7 +22,7 @@ $$S^\prime_f(D,S,R) = w_9\cdot D^{w_{10}}\cdot S^{w_{11}}\cdot e^{(1-R^{w_{12}})
 
 This change is **relevant specially for those who have a large backlog and decks that have been stale and dormant for a very large period**. I hope this will help you catch up on your backlog. More about this will be said when explaining $w8$ [setting](##New-Stability-after-RECALL).
 
-Also, the distinction between new stability and new interval was removed. New Stability after rating "Hard" has been corrected to be the `last stability * hard interval`; and new Stability after rating "Easy" has been corrected to be the `Next_recall_stability * EasyBonus`. This is to avoid the FSRS strange behavior of, after rating "Hard", on next review the proposed next interval in case of pressing "Hard" once more being too long, almost the same of that of pressing "Good". The inverse situation happened when "Easy" was pressed (pressing Easy subsequently would give a next Stability smaller than it should).
+Also, the distinction between new stability and new interval was removed. New Stability after rating "Hard" has been corrected to be the `New Stability after rating "Good" * hard interval`; and new Stability after rating "Easy" has been corrected to be the `New Stability after rating "Good" * EasyBonus`. This is to avoid the FSRS strange behavior of, after rating "Hard", on next review the proposed next interval in case of pressing "Hard" once more being too long, almost the same of that of pressing "Good". The inverse situation happened when "Easy" was pressed (pressing Easy subsequently would give a next Stability smaller than it should).
 
 Another change is that for *new cards*, learning steps can now be set in `Settings > Custom Schedulers`. Default parameters are:
 - 1 min after rating "Again";
@@ -257,3 +257,6 @@ You can play with other settings in Geobebra [here](https://www.geogebra.org/cal
 - Install the plugin from the RemNote plugin marketplace by using the link https://www.remnote.com/plugins/fsrs4remnoteFork.
 - Open the settings page and click on [Custom Schedulers].
 - Choose to use "DSRscheduler" on the "Scheduler Type" dropdown menu (as your Global Default Scheduler or any other scheduler).
+
+# Changelog
+v. 0.1.5 - Changed the behavior when pressing "Hard". The next Stability, instead of being, like in Anki, the last stability * Hard Interval, will be the Next Stability for Good * Hard Interval. So, usign the default 0.5 means that the Hard Stability will be half of that for pressing Good. 
