@@ -230,11 +230,11 @@ async function onActivate(plugin: ReactRNPlugin) {
       const retrievability = Math.exp((Math.log(0.9) * interval) / last_states.stability);
       let next_s;
       if (rating == Rating.Again) {
-          next_s = next_forget_stability(next_d, last_states.stability, retrievability)
+          next_s = next_forget_stability(next_d, last_states.stability, retrievability);
       } else if (rating == Rating.Hard) {
-        next_s =  next_recall_stability(next_d, last_states.stability, retrievability) * hardInterval
+        next_s =  next_recall_stability(last_states.difficulty, last_states.stability, retrievability) * hardInterval;
       } else if (rating == Rating.Easy) {
-      next_s = next_recall_stability(next_d, last_states.stability, retrievability) * easyBonus
+      next_s = next_recall_stability(next_d, last_states.stability, retrievability) * easyBonus;
       } else {
         next_s = next_recall_stability(next_d, last_states.stability, retrievability);
       }
