@@ -1,5 +1,6 @@
 # Changelog
 v. 0.1.5 - Changed the behavior when pressing "Hard". The next Stability, instead of being, like in Anki, the last stability * Hard Factor, will be the somewhat less than Next Stability for Good * Hard Factor. So, usign the default 0.5 means that the Hard Stability will be a little less than half of that for pressing Good. 
+
 v. 0.1.7 - Constrained the Hard Factor maximum value to 0.8.
 
 
