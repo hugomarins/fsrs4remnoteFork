@@ -31,8 +31,8 @@ This change is **relevant specially for those who have a large backlog and decks
 Also, the distinction between new stability and new interval was removed. New Stability after rating "Hard" has been corrected to be the `New Stability after rating "Good" * hard interval`; and new Stability after rating "Easy" has been corrected to be the `New Stability after rating "Good" * EasyBonus`. This is to avoid the FSRS strange behavior of, after rating "Hard", on next review the proposed next interval in case of pressing "Hard" once more being too long, almost the same of that of pressing "Good". The inverse situation happened when "Easy" was pressed (pressing Easy subsequently would give a next Stability smaller than it should).
 
 Another change is that for *new cards*, learning steps can now be set in `Settings > Custom Schedulers`. Default parameters are:
-- 1 min after rating "Again";
-- 10 min after rating "Hard";
+- 6 min after rating "Again";
+- 15 min after rating "Hard";
 - 1 day after rating "Good".
 (rating "Easy" jumps the learning phase and yet give the Easy Bonus; the card will receive an interval of $(w_0 + (3 \cdot w_1)) \cdot \text{Easy bonus}$, around 11 days using default settings)
 
