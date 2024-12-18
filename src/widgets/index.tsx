@@ -96,7 +96,7 @@ async function onActivate(plugin: ReactRNPlugin) {
       [SchedulerParam.EnableFuzz]: enableFuzz,
       [SchedulerParam.MaximumInterval]: maximumInterval,
       [SchedulerParam.EasyBonus]: easyBonus,
-      [SchedulerParam.HardInterval]: hardInterval,
+      [SchedulerParam.HardFactor]: hardFactor,
       [SchedulerParam.AgainStep]: againStep,
       [SchedulerParam.HardStep]: hardStep,
       [SchedulerParam.GoodStep]: goodStep,
@@ -232,7 +232,7 @@ async function onActivate(plugin: ReactRNPlugin) {
       if (rating == Rating.Again) {
           next_s = next_forget_stability(next_d, last_states.stability, retrievability);
       } else if (rating == Rating.Hard) {
-        next_s =  next_recall_stability(last_states.difficulty, last_states.stability, retrievability) * hardInterval;
+        next_s =  next_recall_stability(last_states.difficulty, last_states.stability, retrievability) * Math.min(hardFactor, 0.8);
       } else if (rating == Rating.Easy) {
       next_s = next_recall_stability(next_d, last_states.stability, retrievability) * easyBonus;
       } else {

@@ -67,11 +67,11 @@ export const defaultParameters = {
       },
     ]
   },
-  [SchedulerParam.HardInterval]: {
-    id: SchedulerParam.HardInterval,
-    title: SchedulerParam.HardInterval,
+  [SchedulerParam.HardFactor]: {
+    id: SchedulerParam.HardFactor,
+    title: SchedulerParam.HardFactor,
     defaultValue: 0.5,
-    description: "If you rate Hard, the next Stability will be that of rating Good multiplied by this factor. Usign the default 0.5 means that the Hard Stability will be half of that for pressing Good.",
+    description: "If you rate Hard, the next Stability will be a little less than that of rating Good multiplied by this factor. Usign the default 0.5 means that the Hard Stability will be a little less than half of that for pressing Good. (Max value: 0.8)",
     type: 'number' as const,
     validators: [
       {
